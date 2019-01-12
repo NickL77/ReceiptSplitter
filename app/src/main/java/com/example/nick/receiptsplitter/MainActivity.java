@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e)
         {
             Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
-            //Log.d(TAG, "Failed to load", e);
+            Log.d("TAG", "Failed to load", e);
         }
     }
 
@@ -119,27 +119,9 @@ public class MainActivity extends AppCompatActivity {
         //MenuShootImage is user defined menu option to shoot image
         if(requestCode==REQUEST_TAKE_PHOTO && resultCode==RESULT_OK)
         {
-            this.getContentResolver().notifyChange(photoURI, null);
-            ContentResolver cr = this.getContentResolver();
-            Bitmap bitmap;
-            try
-            {
-                bitmap = android.provider.MediaStore.Images.Media.getBitmap(cr, photoURI);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, stream);
-                byte[] image = stream.toByteArray();
-
-                Intent switch2select = new Intent(this, SelectPricesActivity.class);
-                switch2select.putExtra("photo", image);
-                startActivity(switch2select);
-            }
-            catch (Exception e)
-            {
-                Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT).show();
-                Log.d("TAG", "Failed to load", e);
-            }
-
-            //this.grabImage(result);
+            Intent switch2select = new Intent(this, SelectPricesActivity.class);
+            switch2select.putExtra("photo", photoURI.toString());
+            startActivity(switch2select);
         }
         super.onActivityResult(requestCode, resultCode, intent);
     }
