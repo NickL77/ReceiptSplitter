@@ -9,14 +9,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Receipt implements Serializable {
-    double subtotal;
-    double tax;
-    double taxrate;
-    boolean givetip;
-    double tip;
-    double total;
-    ArrayList<Person> people = new ArrayList<Person>();
-    ArrayList<Item> items = new ArrayList<Item>();
+    public double subtotal;
+    public double tax;
+    public double taxrate;
+    public boolean givetip;
+    public double tip;
+    public double total;
+    public ArrayList<Person> people = new ArrayList<Person>();
+    public ArrayList<Item> items = new ArrayList<Item>();
 
     DecimalFormat df = new DecimalFormat("#.##");
 

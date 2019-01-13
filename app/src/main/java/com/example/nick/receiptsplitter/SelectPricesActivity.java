@@ -50,7 +50,6 @@ public class SelectPricesActivity  extends AppCompatActivity {
     Person currPerson = p1;
 
     Uri photoUri;
-    TextView OCRval;
     ImageView imageView;
     ImageButton checkmarkButton;
     Bitmap photo, mutableBitMap, croppedBitMap;
@@ -59,7 +58,6 @@ public class SelectPricesActivity  extends AppCompatActivity {
     TessBaseAPI mTess;
 
     String datapath = "";
-    int fingerX = 0, fingerY = 0;
     int currR = 0, currG = 0, currB = 0;
     int rectHeight = 150, rectWidth = 400, rectX = 100, rectY = 300;
     int origHeight = 150, origWidth = 400;
@@ -110,6 +108,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
         imageView.setImageBitmap(photo);
 
+        //add click listeners for each button
         addButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -246,7 +245,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
             }
         });
 
-
+        //set listener for zooming and moving boxes
         imageView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent event) {
@@ -350,16 +349,16 @@ public class SelectPricesActivity  extends AppCompatActivity {
     }
 
     public void initTesseract(){
-        datapath = getFilesDir()+ "/tesseract/";
+        datapath = getFilesDir()+ "/tesseract/"; //file path where tessdata will be put
         mTess = new TessBaseAPI();
 
-        checkFile(new File(datapath + "tessdata/")); //check if file exists; if it doesn't, copy it over
+        checkFile(new File(datapath + "tessdata/")); //check if tessdata exists; if it doesn't, copy it over from assets folder
 
         mTess.init(datapath, "eng");
     }
 
     private void checkFile(File directory) {
-        if (!directory.exists()&& directory.mkdirs()){
+        if (!directory.exists() && directory.mkdirs()){
             copyAssets();
         }
         if(directory.exists()) {

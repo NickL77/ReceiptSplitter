@@ -3,10 +3,10 @@ package com.example.nick.receiptsplitter;
 import java.io.Serializable;
 
 public class Person implements Serializable {
-    String name;
-    int rgb1;
-    int rgb2;
-    int rgb3;
+    public int rgb1;
+    public int rgb2;
+    public int rgb3;
+    public String name;
     public double payment;
 
     public Person(String name, int rgb1, int rgb2, int rgb3){

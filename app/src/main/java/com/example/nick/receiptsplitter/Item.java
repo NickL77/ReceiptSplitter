@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Item implements Serializable {
-    double price;
-    public ArrayList<Person> splitters = new ArrayList<Person>();
+    public double price;
     public double split_cost;
+    public ArrayList<Person> splitters = new ArrayList<Person>();
 
     public Item(double price, Person p){
         this.price = price;
