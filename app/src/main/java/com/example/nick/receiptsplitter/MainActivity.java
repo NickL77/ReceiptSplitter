@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,9 +24,15 @@ import android.widget.TextView;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.googlecode.tesseract.android.TessBaseAPI;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -35,11 +42,15 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_TAKE_PHOTO = 1;
     String mCurrentPhotoPath;
     private Uri photoURI;
+    String datapath = "";
+    public TessBaseAPI mTess;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initTesseract();
 
         Button click = (Button)findViewById(R.id.capture);
         result = (ImageView)findViewById(R.id.pictureView);
@@ -124,6 +135,53 @@ public class MainActivity extends AppCompatActivity {
             startActivity(switch2select);
         }
         super.onActivityResult(requestCode, resultCode, intent);
+    }
+
+    public void initTesseract(){
+        datapath = getFilesDir()+ "/tesseract/";
+        mTess = new TessBaseAPI();
+
+        checkFile(new File(datapath + "tessdata/")); //check if file exists; if it doesn't, copy it over
+
+        mTess.init(datapath, "eng");
+    }
+
+    private void checkFile(File directory) {
+        if (!directory.exists()&& directory.mkdirs()){
+            copyAssets();
+        }
+        if(directory.exists()) {
+            String assetPath = datapath+ "/tessdata/eng.traineddata";
+            File data = new File(assetPath);
+            if (!data.exists()) {
+                copyAssets();
+            }
+        }
+    }
+
+    private void copyAssets() {
+        try {
+            String filepath = datapath + "/tessdata/eng.traineddata";
+            AssetManager assetManager = getAssets();
+            InputStream instream = assetManager.open("tessdata/eng.traineddata");//get from assets
+            OutputStream outstream = new FileOutputStream(filepath);
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+            outstream.flush();
+            outstream.close();
+            instream.close();
+            File file = new File(filepath);
+            if (!file.exists()) {
+                throw new FileNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

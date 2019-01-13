@@ -43,7 +43,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
     ImageButton addButton, finishButton;
     int rectHeight = 100, rectWidth = 200, rectX = 100, rectY = 300;
     int fingerX = 0, fingerY = 0;
-    String datapath = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,9 @@ public class SelectPricesActivity  extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         addButton = (ImageButton)findViewById(R.id.imageButton);
         finishButton = (ImageButton)findViewById(R.id.finishButton);
+
+
+
 
         // access image based on URI sent by main activity
         Bundle extras = getIntent().getExtras();
@@ -104,7 +107,8 @@ public class SelectPricesActivity  extends AppCompatActivity {
                 imageView.setImageBitmap(croppedBitMap);
 
                 //begin OCR
-                String result = runOCR(croppedBitMap);
+                //String result = runOCR(croppedBitMap);
+                //Log.e("User",result);
             }
         });
 
@@ -151,53 +155,16 @@ public class SelectPricesActivity  extends AppCompatActivity {
     }
 
     private String runOCR(Bitmap image){
-        String datapath = getFilesDir() + "/tesseract/";
-        TessBaseAPI mTess = new TessBaseAPI();
-        checkFile(new File(datapath + "tessdata/")); //check that the file path to eng.traineddata exists
-                                                            //if not, copy it over from assets
-        mTess.init(datapath, "eng");
+
         String OCRresult = null;
-        mTess.setImage(image);
-        OCRresult = mTess.getUTF8Text();
+//
+
+//
+        //mTess.setImage(image);
+//        OCRresult = mTess.getUTF8Text();
 
         return OCRresult;
     }
 
-    private void checkFile(File directory) {
-        if (!directory.exists()&& directory.mkdirs()){
-            copyAssets();
-        }
-        if(directory.exists()) {
-            String assetPath = datapath+ "/tessdata/eng.traineddata";
-            File data = new File(assetPath);
-            if (!data.exists()) {
-                copyAssets();
-            }
-        }
-    }
 
-    private void copyAssets() {
-        try {
-            String filepath = datapath + "/tessdata/eng.traineddata";
-            AssetManager assetManager = getAssets();
-            InputStream instream = assetManager.open("tessdata/eng.traineddata");//get from assets
-            OutputStream outstream = new FileOutputStream(filepath);
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = instream.read(buffer)) != -1) {
-                outstream.write(buffer, 0, read);
-            }
-            outstream.flush();
-            outstream.close();
-            instream.close();
-            File file = new File(filepath);
-            if (!file.exists()) {
-                throw new FileNotFoundException();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }
