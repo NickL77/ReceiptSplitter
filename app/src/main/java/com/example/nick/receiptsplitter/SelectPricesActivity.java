@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
@@ -43,8 +44,10 @@ public class SelectPricesActivity  extends AppCompatActivity {
     ImageView imageView;
     ImageButton addButton, finishButton;
     TextView OCRval;
-    int rectHeight = 100, rectWidth = 200, rectX = 100, rectY = 300;
+    int rectHeight = 150, rectWidth = 350, rectX = 100, rectY = 300;
     int fingerX = 0, fingerY = 0;
+    String datapath = "";
+    public TessBaseAPI mTess;
 
 
     @Override
@@ -52,13 +55,11 @@ public class SelectPricesActivity  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_prices);
 
+        initTesseract();
+
         imageView = (ImageView)findViewById(R.id.imageView);
         addButton = (ImageButton)findViewById(R.id.imageButton);
         finishButton = (ImageButton)findViewById(R.id.finishButton);
-        OCRval = (TextView)findViewById(R.id.OCRval);
-
-
-
 
         // access image based on URI sent by main activity
         Bundle extras = getIntent().getExtras();
@@ -111,12 +112,10 @@ public class SelectPricesActivity  extends AppCompatActivity {
                 imageView.setImageBitmap(croppedBitMap);
 
                 //begin OCR
-                //String result = runOCR(croppedBitMap);
-                //Log.e("User",result);
+                String result = runOCR(croppedBitMap);
 
-                OCRval.setTextColor(Color.GREEN);
-                OCRval.setText("test");
-
+                Toast.makeText(getApplicationContext(), result,
+                        Toast.LENGTH_LONG).show();
 
             }
         });
@@ -163,14 +162,58 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
     }
 
+    public void initTesseract(){
+        datapath = getFilesDir()+ "/tesseract/";
+        mTess = new TessBaseAPI();
+
+        checkFile(new File(datapath + "tessdata/")); //check if file exists; if it doesn't, copy it over
+
+        mTess.init(datapath, "eng");
+    }
+    private void checkFile(File directory) {
+        if (!directory.exists()&& directory.mkdirs()){
+            copyAssets();
+        }
+        if(directory.exists()) {
+            String assetPath = datapath+ "/tessdata/eng.traineddata";
+            File data = new File(assetPath);
+            if (!data.exists()) {
+                copyAssets();
+            }
+        }
+    }
+
+    private void copyAssets() {
+        try {
+            String filepath = datapath + "/tessdata/eng.traineddata";
+            AssetManager assetManager = getAssets();
+            InputStream instream = assetManager.open("tessdata/eng.traineddata");//get from assets
+            OutputStream outstream = new FileOutputStream(filepath);
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = instream.read(buffer)) != -1) {
+                outstream.write(buffer, 0, read);
+            }
+            outstream.flush();
+            outstream.close();
+            instream.close();
+            File file = new File(filepath);
+            if (!file.exists()) {
+                throw new FileNotFoundException();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private String runOCR(Bitmap image){
 
         String OCRresult = null;
-//
 
-//
-        //mTess.setImage(image);
-//        OCRresult = mTess.getUTF8Text();
+        mTess.setImage(image);
+        OCRresult = mTess.getUTF8Text();
 
         return OCRresult;
     }
