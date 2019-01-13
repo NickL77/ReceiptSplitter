@@ -33,22 +33,34 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 
 
 public class SelectPricesActivity  extends AppCompatActivity {
 
+    Receipt receipt = new Receipt(16.50,0,false,0.06,0);
+
+    Person p1 = new Person("p1", 135, 206, 250);
+    Person p2 = new Person("p2", 186, 85, 211);
+    Person p3 = new Person("p3", 124, 252, 0);
+    Person p4 = new Person("p4", 255, 127, 80);
+
+    Person currPerson = p1;
+
     Bitmap photo, mutableBitMap, croppedBitMap;
     Uri photoUri;
     ImageView imageView;
     ImageButton addButton, finishButton;
     TextView OCRval;
-    int rectHeight = 150, rectWidth = 350, rectX = 100, rectY = 300;
+    int rectHeight = 150, rectWidth = 400, rectX = 100, rectY = 300;
     int fingerX = 0, fingerY = 0;
     String datapath = "";
     public TessBaseAPI mTess;
 
+    ArrayList<Rect> Boxes = new ArrayList<Rect>();
+    ArrayList<Item> Items = new ArrayList<Item>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +68,11 @@ public class SelectPricesActivity  extends AppCompatActivity {
         setContentView(R.layout.select_prices);
 
         initTesseract();
+
+        receipt.addPerson(p1);
+        receipt.addPerson(p2);
+        receipt.addPerson(p3);
+        receipt.addPerson(p4);
 
         imageView = (ImageView)findViewById(R.id.imageView);
         addButton = (ImageButton)findViewById(R.id.imageButton);
@@ -107,15 +124,39 @@ public class SelectPricesActivity  extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                croppedBitMap = Bitmap.createBitmap(mutableBitMap, rectX, rectY, rectWidth, rectHeight);
 
-                imageView.setImageBitmap(croppedBitMap);
+                //overlap case: simply add currPerson to the item it overlaps with
+                Item checkO = checkOverlap();
+                if (checkO != null){
+                    checkO.addSplitter(currPerson);
+                }
+                //non overlap, create new item, add to list, add box to list
+                else {
+                    croppedBitMap = Bitmap.createBitmap(mutableBitMap, rectX, rectY, rectWidth, rectHeight);
+                    String result = runOCR(croppedBitMap);
 
-                //begin OCR
-                String result = runOCR(croppedBitMap);
+                    double tess2d = Tess2Double(result);
 
-                Toast.makeText(getApplicationContext(), result,
-                        Toast.LENGTH_LONG).show();
+                    if (tess2d == -1){
+                        Toast.makeText(getApplicationContext(), "Error reading value. \n Please Try again.",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+                    else {
+                        Item newItem = new Item(tess2d, currPerson);
+                        receipt.addItem(newItem);
+
+                        Items.add(newItem);
+                        Boxes.add(new Rect(rectX, rectY + rectHeight, rectX + rectHeight, rectY));
+
+                        Toast.makeText(getApplicationContext(), Double.toString(tess2d),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                for (Item i: Items){
+                    Log.e("ITEMS", "" + i.price);
+                }
 
             }
         });
@@ -138,7 +179,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
                         Paint paint = new Paint();
                         paint.setStrokeWidth(10);
-                        paint.setColor(Color.rgb(51,255,51));
+                        paint.setColor(Color.rgb(p1.rgb1,p1.rgb2,p1.rgb3));
                         paint.setStyle(Paint.Style.STROKE);
 
                         rectX = fingerX * 2;
@@ -157,9 +198,41 @@ public class SelectPricesActivity  extends AppCompatActivity {
             }
         });
 
+    }
 
+    public Item checkOverlap(){
+        for (int i = 0; i < Boxes.size(); i++){
+            Rect b = Boxes.get(i);
+            int xLeft = Math.max(b.left, rectX);
+            int xRight = Math.min(b.right, rectX + rectWidth);
+            int yTop = Math.min(b.top, rectY + rectHeight);
+            int yBottom = Math.max(b.bottom, rectY);
+            if (yTop > yBottom && xRight > xLeft){
+                int overlapArea = (xRight - xLeft) * (yTop - yBottom);
+                int currArea = (b.top - b.bottom) * (b.right - b.left);
+                int pastArea = rectHeight * rectWidth;
+                if (2*overlapArea > 0.7 * (currArea + pastArea)){
+                    return Items.get(i);
+                }
+            }
+        }
+        return null;
+    }
 
-
+    public double Tess2Double(String str){
+        String s = "";
+        for (int i = 0; i < str.length(); i++){
+            if (Character.isDigit(str.charAt(i))){
+                s += str.charAt(i);
+            }
+            else if (str.charAt(i) == '.' || str.charAt(i) == '-'){
+                s += ".";
+            }
+        }
+        if (s == ""){
+            return -1;
+        }
+        return Double.parseDouble(s);
     }
 
     public void initTesseract(){
@@ -170,6 +243,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
         mTess.init(datapath, "eng");
     }
+
     private void checkFile(File directory) {
         if (!directory.exists()&& directory.mkdirs()){
             copyAssets();
