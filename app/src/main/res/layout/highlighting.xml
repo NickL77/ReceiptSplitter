@@ -79,7 +79,6 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/displays_image"
         android:layout_below="@id/btnCircle1"
         android:layout_marginTop="6dp"
         android:layout_above="@id/btnFinish"/>

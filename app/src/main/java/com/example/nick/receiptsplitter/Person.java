@@ -1,6 +1,8 @@
 package com.example.nick.receiptsplitter;
 
-public class Person{
+import java.io.Serializable;
+
+public class Person implements Serializable {
     String name;
     int rgb1;
     int rgb2;

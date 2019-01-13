@@ -3,11 +3,12 @@ package com.example.nick.receiptsplitter;
 import com.example.nick.receiptsplitter.Item;
 import com.example.nick.receiptsplitter.Person;
 
+import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class Receipt{
+public class Receipt implements Serializable {
     double subtotal;
     double tax;
     double taxrate;
@@ -29,6 +30,9 @@ public class Receipt{
     }
 
     public void getAllPayments(){
+        for (Item i : items){
+            i.getSplitCost();
+        }
         for(Person x : people){
             double sum = 0;
             for(Item y : items){

@@ -36,7 +36,6 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView result;
     static final int REQUEST_TAKE_PHOTO = 1;
     String mCurrentPhotoPath;
     private Uri photoURI;
@@ -48,8 +47,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button click = (Button)findViewById(R.id.capture);
-        result = (ImageView)findViewById(R.id.pictureView);
+        Button click = (Button)findViewById(R.id.takePicture);
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_DENIED){
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
-
+    /*
     public void grabImage(ImageView imageView)
     {
         this.getContentResolver().notifyChange(photoURI, null);
@@ -117,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d("TAG", "Failed to load", e);
         }
     }
+    */
 
 
     //called after camera intent finished

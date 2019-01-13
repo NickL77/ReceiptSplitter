@@ -192,8 +192,10 @@ public class SelectPricesActivity  extends AppCompatActivity {
         finishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent switch2final = new Intent(this, FinalScreen.class);
-                //switch2select.putExtra("photo", photoURI.toString());
+                Bundle bundle = new Bundle();
+                Intent switch2final = new Intent(SelectPricesActivity.this, FinalScreen.class);
+                bundle.putSerializable("receipt", receipt);
+                switch2final.putExtras(bundle);
                 startActivity(switch2final);
             }
         });
@@ -236,6 +238,9 @@ public class SelectPricesActivity  extends AppCompatActivity {
                 Log.e("ITEMS", "START OF NEW ITERATION");
                 for (Item i: Items){
                     Log.e("ITEMS", "" + i.price);
+                    for (Person p: i.splitters){
+                        Log.e("ITEMS", p.name);
+                    }
                 }
 
             }
@@ -265,6 +270,33 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
     }
 
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
+            zoomFactor *= scaleGestureDetector.getScaleFactor();
+            zoomFactor = Math.min(5,Math.max(zoomFactor, 0.2));//limit scalefactor to be in range 0.1 to 10
+
+            Log.e("zoomFactor", String.valueOf(zoomFactor));
+
+
+            int centerX = rectX+rectWidth/2;
+            int centerY = rectY+rectHeight/2;
+
+            //scale the rectangle
+            rectWidth = (int) (origWidth * zoomFactor);
+            rectHeight = (int) (origHeight * zoomFactor);
+
+
+            //reposition rectX and rectY based on scaling and center coordinate
+            rectX = centerX - rectWidth/2;
+            rectY = centerY - rectHeight/2;
+
+            drawOnPic();
+
+            return true;
+        }
+    }
+
     public void drawOnPic(){
         mutableBitMap = photo.copy(ARGB_8888, true);
 
@@ -281,35 +313,6 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
         imageView.setImageBitmap(mutableBitMap);
     }
-
-
-    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
-        @Override
-        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
-            zoomFactor *= scaleGestureDetector.getScaleFactor();
-            zoomFactor = Math.min(5,Math.max(zoomFactor, 0.2));//limit scalefactor to be in range 0.1 to 10
-
-            Log.e("zoomFactor", String.valueOf(zoomFactor));
-
-
-            int centerX = rectX+rectWidth/2;
-            int centerY = rectY+rectHeight/2;
-
-            //scale the rectangle
-            rectWidth = (int) (origHeight * zoomFactor);
-            rectHeight = (int) (origWidth * zoomFactor);
-
-
-            //reposition rectX and rectY based on scaling and center coordinate
-            rectX = centerX - rectWidth/2;
-            rectY = centerY - rectHeight/2;
-
-            drawOnPic();
-
-            return true;
-        }
-    }
-
 
     public Item checkOverlap(){
         for (int i = 0; i < Boxes.size(); i++){

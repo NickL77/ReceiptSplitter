@@ -17,36 +17,12 @@ public class FinalScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        TextView mTextMessage = (TextView) findViewById(R.id.message);
+        setContentView(R.layout.final_screen);
 
-        /*
-        Person nick = new Person("Nick", 1, 2, 3);
-        Person brandon = new Person("Brandon", 2, 3, 4);
-        Person steven = new Person("Steven", 3, 4, 5);
-
-        Item boba = new Item(5.00, nick);
-        boba.addSplitter(brandon);
-        boba.getSplitCost();
-
-        Item popcornChicken = new Item(7.00, steven);
-        popcornChicken.addSplitter(brandon);
-        popcornChicken.addSplitter(nick);
-        popcornChicken.getSplitCost();
-
-        Item smoothie = new Item(4.50, steven);
-
-        Receipt receipt1 = new Receipt(16.50, 0.06, false, 0.0, 0.0);
-
-        receipt1.addItem(boba);
-        receipt1.addItem(popcornChicken);
-        receipt1.addItem(smoothie);
-        receipt1.addPerson(nick);
-        receipt1.addPerson(brandon);
-        receipt1.addPerson(steven);
+        Bundle extras = getIntent().getExtras();
+        Receipt receipt1 = (Receipt)extras.getSerializable("receipt");
 
         receipt1.getAllPayments();
-        */
 
         int updateScreen = receipt1.people.size();
 

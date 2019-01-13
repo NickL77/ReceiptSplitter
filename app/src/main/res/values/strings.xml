@@ -3,6 +3,5 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="take_picture">Take Picture</string>
-    <string name="displays_image">displays image</string>
+    <string name="welcome_text">Welcome to the ReceiptSplitter app! To start, press the button below to take a picture. Then, use different colors to indicate what each person bought. When you press FINISH, the app will tell you how much everyone owes! :)</string>
 </resources>
