@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,9 +62,13 @@ public class SelectPricesActivity  extends AppCompatActivity {
     int fingerX = 0, fingerY = 0;
     int currR = 0, currG = 0, currB = 0;
     int rectHeight = 150, rectWidth = 400, rectX = 100, rectY = 300;
+    int origHeight = 150, origWidth = 400;
 
     ArrayList<Rect> Boxes = new ArrayList<>();
     ArrayList<Item> Items = new ArrayList<>();
+
+    private ScaleGestureDetector zoomDetector;
+    private double zoomFactor = 1.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +76,8 @@ public class SelectPricesActivity  extends AppCompatActivity {
         setContentView(R.layout.highlighting);
 
         initTesseract();
+
+        zoomDetector = new ScaleGestureDetector(this, new ScaleListener());
 
         imageView = findViewById(R.id.imageView);
         addButton1 = findViewById(R.id.btnCircle1);
@@ -242,6 +249,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
                 int fingerY = (int) event.getY();
                 int eventaction = event.getAction();
 
+                zoomDetector.onTouchEvent(event);
                 switch (eventaction) {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
@@ -273,6 +281,35 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
         imageView.setImageBitmap(mutableBitMap);
     }
+
+
+    private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector scaleGestureDetector){
+            zoomFactor *= scaleGestureDetector.getScaleFactor();
+            zoomFactor = Math.min(5,Math.max(zoomFactor, 0.2));//limit scalefactor to be in range 0.1 to 10
+
+            Log.e("zoomFactor", String.valueOf(zoomFactor));
+
+
+            int centerX = rectX+rectWidth/2;
+            int centerY = rectY+rectHeight/2;
+
+            //scale the rectangle
+            rectWidth = (int) (origHeight * zoomFactor);
+            rectHeight = (int) (origWidth * zoomFactor);
+
+
+            //reposition rectX and rectY based on scaling and center coordinate
+            rectX = centerX - rectWidth/2;
+            rectY = centerY - rectHeight/2;
+
+            drawOnPic();
+
+            return true;
+        }
+    }
+
 
     public Item checkOverlap(){
         for (int i = 0; i < Boxes.size(); i++){
