@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/subtotalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:text="Subtotal"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/subtotalDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subtotalTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/taxTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/subtotalDisplay"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Tax"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/taxInput"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tipTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/taxInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Tip"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/tipInput"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tipTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/totalTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tipInput"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Total"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/totalDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnCalculate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="CALCULATE" />
+    
+</RelativeLayout>
