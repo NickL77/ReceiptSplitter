@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -41,6 +42,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
     Uri photoUri;
     ImageView imageView;
     ImageButton addButton, finishButton;
+    TextView OCRval;
     int rectHeight = 100, rectWidth = 200, rectX = 100, rectY = 300;
     int fingerX = 0, fingerY = 0;
 
@@ -53,6 +55,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
         imageView = (ImageView)findViewById(R.id.imageView);
         addButton = (ImageButton)findViewById(R.id.imageButton);
         finishButton = (ImageButton)findViewById(R.id.finishButton);
+        OCRval = (TextView)findViewById(R.id.OCRval);
 
 
 
@@ -104,11 +107,17 @@ public class SelectPricesActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 croppedBitMap = Bitmap.createBitmap(mutableBitMap, rectX, rectY, rectWidth, rectHeight);
+
                 imageView.setImageBitmap(croppedBitMap);
 
                 //begin OCR
                 //String result = runOCR(croppedBitMap);
                 //Log.e("User",result);
+
+                OCRval.setTextColor(Color.GREEN);
+                OCRval.setText("test");
+
+
             }
         });
 
