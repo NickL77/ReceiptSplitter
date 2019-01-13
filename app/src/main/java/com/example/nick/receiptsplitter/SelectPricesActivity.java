@@ -51,9 +51,9 @@ public class SelectPricesActivity  extends AppCompatActivity {
     Uri photoUri;
     TextView OCRval;
     ImageView imageView;
-    ImageButton finishButton;
+    ImageButton checkmarkButton;
     Bitmap photo, mutableBitMap, croppedBitMap;
-    Button addButton1, addButton2, addButton3, addButton4, addButton5, addButton6;
+    Button addButton1, addButton2, addButton3, addButton4, addButton5, addButton6, finishButton;
 
     TessBaseAPI mTess;
 
@@ -79,7 +79,8 @@ public class SelectPricesActivity  extends AppCompatActivity {
         addButton4 = findViewById(R.id.btnCircle4);
         addButton5 = findViewById(R.id.btnCircle5);
         addButton6 = findViewById(R.id.btnCircle6);
-        finishButton = findViewById(R.id.btnCheckmark);
+        checkmarkButton = findViewById(R.id.btnCheckmark);
+        finishButton = findViewById(R.id.btnFinish);
 
         // access image based on URI sent by main activity
         Bundle extras = getIntent().getExtras();
@@ -169,7 +170,30 @@ public class SelectPricesActivity  extends AppCompatActivity {
             }
         });
 
+        addButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p6);
+                currPerson = p6;
+                currR = p6.rgb1;
+                currG = p6.rgb2;
+                currB = p6.rgb3;
+                drawOnPic();
+            }
+        });
+
         finishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent switch2final = new Intent(this, FinalScreen.class);
+                //switch2select.putExtra("photo", photoURI.toString());
+                startActivity(switch2final);
+            }
+        });
+
+
+
+        checkmarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -202,6 +226,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
                     }
                 }
 
+                Log.e("ITEMS", "START OF NEW ITERATION");
                 for (Item i: Items){
                     Log.e("ITEMS", "" + i.price);
                 }

@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/payment9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment10"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person9"
+        app:layout_constraintTop_toBottomOf="@+id/payment8" />
+
+    <TextView
+        android:id="@+id/payment8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person8"
+        app:layout_constraintTop_toBottomOf="@+id/payment7" />
+
+    <TextView
+        android:id="@+id/payment7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person7"
+        app:layout_constraintTop_toBottomOf="@+id/payment6" />
+
+    <TextView
+        android:id="@+id/person10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="60dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/payment10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person9" />
+
+    <TextView
+        android:id="@+id/person9"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person10"
+        app:layout_constraintEnd_toStartOf="@+id/payment9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person8" />
+
+    <TextView
+        android:id="@+id/person8"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person9"
+        app:layout_constraintEnd_toStartOf="@+id/payment8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person7" />
+
+    <TextView
+        android:id="@+id/person7"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person8"
+        app:layout_constraintEnd_toStartOf="@+id/payment7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person6" />
+
+    <TextView
+        android:id="@+id/payment5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person5"
+        app:layout_constraintTop_toBottomOf="@+id/payment4" />
+
+    <TextView
+        android:id="@+id/payment10"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="60dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person10"
+        app:layout_constraintTop_toBottomOf="@+id/payment9" />
+
+    <TextView
+        android:id="@+id/persontitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:text="Person"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person1"
+        app:layout_constraintEnd_toStartOf="@+id/paymenttitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/payment6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person6"
+        app:layout_constraintTop_toBottomOf="@+id/payment5" />
+
+    <TextView
+        android:id="@+id/payment4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person4"
+        app:layout_constraintTop_toBottomOf="@+id/payment3" />
+
+    <TextView
+        android:id="@+id/payment3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person3"
+        app:layout_constraintTop_toBottomOf="@+id/payment2" />
+
+    <TextView
+        android:id="@+id/payment2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person2"
+        app:layout_constraintTop_toBottomOf="@+id/payment1" />
+
+    <TextView
+        android:id="@+id/payment1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/person1"
+        app:layout_constraintTop_toBottomOf="@+id/paymenttitle" />
+
+    <TextView
+        android:id="@+id/person6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person7"
+        app:layout_constraintEnd_toStartOf="@+id/payment6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person5" />
+
+    <TextView
+        android:id="@+id/person5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person6"
+        app:layout_constraintEnd_toStartOf="@+id/payment5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person4" />
+
+    <TextView
+        android:id="@+id/person4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person5"
+        app:layout_constraintEnd_toStartOf="@+id/payment4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person3" />
+
+    <TextView
+        android:id="@+id/person3"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person4"
+        app:layout_constraintEnd_toStartOf="@+id/payment3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person2" />
+
+    <TextView
+        android:id="@+id/person2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person3"
+        app:layout_constraintEnd_toStartOf="@+id/payment2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person1" />
+
+    <TextView
+        android:id="@+id/person1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/person2"
+        app:layout_constraintEnd_toStartOf="@+id/payment1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/persontitle" />
+
+    <TextView
+        android:id="@+id/paymenttitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginRight="14dp"
+        android:text="Payment"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/payment1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/persontitle"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>
