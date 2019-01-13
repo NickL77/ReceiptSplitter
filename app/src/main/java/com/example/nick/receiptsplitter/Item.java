@@ -1,11 +1,12 @@
 package com.example.nick.receiptsplitter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Item implements Serializable {
     double price;
-    public ArrayList<Person> splitters = new ArrayList<Person>();
+    public Set<Person> splitters = new HashSet<Person>();
     public double split_cost;
 
     public Item(double price, Person p){

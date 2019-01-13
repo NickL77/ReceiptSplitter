@@ -40,7 +40,8 @@ import static android.graphics.Bitmap.Config.ARGB_8888;
 
 public class SelectPricesActivity  extends AppCompatActivity {
 
-    Receipt receipt = new Receipt(16.50,0,false,0.06,0);
+    //Receipt receipt = new Receipt(16.50,0,false,0.06,0);
+    Receipt receipt = new Receipt();
     Person p1 = new Person("p1", 255, 110, 108);
     Person p2 = new Person("p2", 255, 210, 119);
     Person p3 = new Person("p3", 153, 237, 127);
@@ -193,10 +194,10 @@ public class SelectPricesActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                Intent switch2final = new Intent(SelectPricesActivity.this, FinalScreen.class);
+                Intent switch2taxandtip = new Intent(SelectPricesActivity.this, TaxAndTipActivity.class);
                 bundle.putSerializable("receipt", receipt);
-                switch2final.putExtras(bundle);
-                startActivity(switch2final);
+                switch2taxandtip.putExtras(bundle);
+                startActivity(switch2taxandtip);
             }
         });
 
@@ -206,17 +207,19 @@ public class SelectPricesActivity  extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                double tess2d;
                 //overlap case: simply add currPerson to the item it overlaps with
                 Item checkO = checkOverlap();
-                if (checkO != null){
+                if (checkO != null) {
                     checkO.addSplitter(currPerson);
+                    tess2d = checkO.price;
                 }
                 //non overlap, create new item, add to list, add box to list
                 else {
                     croppedBitMap = Bitmap.createBitmap(mutableBitMap, rectX, rectY, rectWidth, rectHeight);
                     String result = runOCR(croppedBitMap);
 
-                    double tess2d = Tess2Double(result);
+                    tess2d = Tess2Double(result);
 
                     if (tess2d == -1){
                         Toast.makeText(getApplicationContext(), "Error reading value. \n Please Try again.",
@@ -229,11 +232,11 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
                         Items.add(newItem);
                         Boxes.add(new Rect(rectX, rectY + rectHeight, rectX + rectHeight, rectY));
-
-                        Toast.makeText(getApplicationContext(), Double.toString(tess2d),
-                                Toast.LENGTH_LONG).show();
                     }
+
                 }
+                Toast.makeText(getApplicationContext(), currPerson.name + ": " + Double.toString(tess2d),
+                        Toast.LENGTH_LONG).show();
 
                 Log.e("ITEMS", "START OF NEW ITERATION");
                 for (Item i: Items){

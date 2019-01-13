@@ -10,17 +10,25 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
 
 public class FinalScreen extends AppCompatActivity {
 
+    Receipt receipt1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.final_screen);
 
-        Bundle extras = getIntent().getExtras();
-        Receipt receipt1 = (Receipt)extras.getSerializable("receipt");
+        Bundle extras = this.getIntent().getExtras();
+
+        Log.e("USER1", "" + extras.containsKey("receipt"));
+
+        receipt1 = (Receipt)extras.getSerializable("r");
+
+        //Log.e("USER2", "" + (receipt1== null));
 
         receipt1.getAllPayments();
 
