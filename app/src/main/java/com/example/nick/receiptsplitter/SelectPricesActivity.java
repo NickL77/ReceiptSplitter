@@ -1,30 +1,29 @@
 package com.example.nick.receiptsplitter;
 
-import android.Manifest;
-
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.constraint.solver.widgets.Rectangle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
+import android.Manifest;
+import android.graphics.BitmapFactory;
+import android.support.constraint.solver.widgets.Rectangle;
+import android.widget.Button;
+import android.content.Intent;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 import java.io.File;
@@ -41,42 +40,46 @@ import static android.graphics.Bitmap.Config.ARGB_8888;
 public class SelectPricesActivity  extends AppCompatActivity {
 
     Receipt receipt = new Receipt(16.50,0,false,0.06,0);
-
-    Person p1 = new Person("p1", 135, 206, 250);
-    Person p2 = new Person("p2", 186, 85, 211);
-    Person p3 = new Person("p3", 124, 252, 0);
-    Person p4 = new Person("p4", 255, 127, 80);
-
+    Person p1 = new Person("p1", 255, 110, 108);
+    Person p2 = new Person("p2", 255, 210, 119);
+    Person p3 = new Person("p3", 153, 237, 127);
+    Person p4 = new Person("p4", 111, 230, 241);
+    Person p5 = new Person("p5", 125, 134, 253);
+    Person p6 = new Person("p6", 239, 135, 239);
     Person currPerson = p1;
 
-    Bitmap photo, mutableBitMap, croppedBitMap;
     Uri photoUri;
-    ImageView imageView;
-    ImageButton addButton, finishButton;
     TextView OCRval;
-    int rectHeight = 150, rectWidth = 400, rectX = 100, rectY = 300;
-    int fingerX = 0, fingerY = 0;
-    String datapath = "";
-    public TessBaseAPI mTess;
+    ImageView imageView;
+    ImageButton finishButton;
+    Bitmap photo, mutableBitMap, croppedBitMap;
+    Button addButton1, addButton2, addButton3, addButton4, addButton5, addButton6;
 
-    ArrayList<Rect> Boxes = new ArrayList<Rect>();
-    ArrayList<Item> Items = new ArrayList<Item>();
+    TessBaseAPI mTess;
+
+    String datapath = "";
+    int fingerX = 0, fingerY = 0;
+    int currR = 0, currG = 0, currB = 0;
+    int rectHeight = 150, rectWidth = 400, rectX = 100, rectY = 300;
+
+    ArrayList<Rect> Boxes = new ArrayList<>();
+    ArrayList<Item> Items = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.select_prices);
+        setContentView(R.layout.highlighting);
 
         initTesseract();
 
-        receipt.addPerson(p1);
-        receipt.addPerson(p2);
-        receipt.addPerson(p3);
-        receipt.addPerson(p4);
-
-        imageView = (ImageView)findViewById(R.id.imageView);
-        addButton = (ImageButton)findViewById(R.id.imageButton);
-        finishButton = (ImageButton)findViewById(R.id.finishButton);
+        imageView = findViewById(R.id.imageView);
+        addButton1 = findViewById(R.id.btnCircle1);
+        addButton2 = findViewById(R.id.btnCircle2);
+        addButton3 = findViewById(R.id.btnCircle3);
+        addButton4 = findViewById(R.id.btnCircle4);
+        addButton5 = findViewById(R.id.btnCircle5);
+        addButton6 = findViewById(R.id.btnCircle6);
+        finishButton = findViewById(R.id.btnCheckmark);
 
         // access image based on URI sent by main activity
         Bundle extras = getIntent().getExtras();
@@ -99,25 +102,70 @@ public class SelectPricesActivity  extends AppCompatActivity {
 
         imageView.setImageBitmap(photo);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
+        addButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                mutableBitMap = photo.copy(ARGB_8888, true);
-
-                Canvas canvas = new Canvas(mutableBitMap);
-
-                Paint paint = new Paint();
-                paint.setStrokeWidth(10);
-                paint.setColor(Color.rgb(51,255,51));
-                paint.setStyle(Paint.Style.STROKE);
-
-                Rect rectangle = new Rect(rectX, rectY + rectHeight, rectX + rectWidth, rectY);
-
-                canvas.drawRect(rectangle, paint);
-
-                imageView.setImageBitmap(mutableBitMap);
-
+                receipt.addPerson(p1);
+                currPerson = p1;
+                currR = p1.rgb1;
+                currG = p1.rgb2;
+                currB = p1.rgb3;
+                drawOnPic();
+            }
+        });
+        addButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p2);
+                currPerson = p2;
+                currR = p2.rgb1;
+                currG = p2.rgb2;
+                currB = p2.rgb3;
+                drawOnPic();
+            }
+        });
+        addButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p3);
+                currPerson = p3;
+                currR = p3.rgb1;
+                currG = p3.rgb2;
+                currB = p3.rgb3;
+                drawOnPic();
+            }
+        });
+        addButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p4);
+                currPerson = p4;
+                currR = p4.rgb1;
+                currG = p4.rgb2;
+                currB = p4.rgb3;
+                drawOnPic();
+            }
+        });
+        addButton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p5);
+                currPerson = p5;
+                currR = p5.rgb1;
+                currG = p5.rgb2;
+                currB = p5.rgb3;
+                drawOnPic();
+            }
+        });
+        addButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                receipt.addPerson(p6);
+                currPerson = p6;
+                currR = p6.rgb1;
+                currG = p6.rgb2;
+                currB = p6.rgb3;
+                drawOnPic();
             }
         });
 
@@ -173,31 +221,32 @@ public class SelectPricesActivity  extends AppCompatActivity {
                     case MotionEvent.ACTION_DOWN:
                     case MotionEvent.ACTION_MOVE:
                     case MotionEvent.ACTION_UP:
-                        mutableBitMap = photo.copy(ARGB_8888, true);
-
-                        Canvas canvas = new Canvas(mutableBitMap);
-
-                        Paint paint = new Paint();
-                        paint.setStrokeWidth(10);
-                        paint.setColor(Color.rgb(p1.rgb1,p1.rgb2,p1.rgb3));
-                        paint.setStyle(Paint.Style.STROKE);
-
                         rectX = fingerX * 2;
                         rectY = fingerY * 2;
-
-                        Log.e("rectX", String.valueOf(rectX));
-
-                        Rect rectangle = new Rect(rectX, rectY + rectHeight, rectX + rectWidth, rectY);
-
-                        canvas.drawRect(rectangle, paint);
-
-                        imageView.setImageBitmap(mutableBitMap);
+                        drawOnPic();
 
                 }
                 return true;
             }
         });
 
+    }
+
+    public void drawOnPic(){
+        mutableBitMap = photo.copy(ARGB_8888, true);
+
+        Canvas canvas = new Canvas(mutableBitMap);
+
+        Paint paint = new Paint();
+        paint.setStrokeWidth(10);
+        paint.setColor(Color.rgb(currR, currG, currB));
+        paint.setStyle(Paint.Style.STROKE);
+
+        Rect rectangle = new Rect(rectX, rectY + rectHeight, rectX + rectWidth, rectY);
+
+        canvas.drawRect(rectangle, paint);
+
+        imageView.setImageBitmap(mutableBitMap);
     }
 
     public Item checkOverlap(){
@@ -211,7 +260,7 @@ public class SelectPricesActivity  extends AppCompatActivity {
                 int overlapArea = (xRight - xLeft) * (yTop - yBottom);
                 int currArea = (b.top - b.bottom) * (b.right - b.left);
                 int pastArea = rectHeight * rectWidth;
-                if (2*overlapArea > 0.7 * (currArea + pastArea)){
+                if (2*overlapArea > 0.5 * (currArea + pastArea)){
                     return Items.get(i);
                 }
             }

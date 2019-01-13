@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/displays_image" />
+
+    <Button
+        android:id="@+id/btnCircle1"
+        android:background="@drawable/btn_background1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
+
+    <Button
+        android:id="@+id/btnCircle2"
+        android:background="@drawable/btn_background2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/btnCircle1"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
+
+    <Button
+        android:id="@+id/btnCircle3"
+        android:background="@drawable/btn_background3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/btnCircle2"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
+
+    <Button
+        android:id="@+id/btnCircle4"
+        android:background="@drawable/btn_background4"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/btnCircle3"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
+
+    <Button
+        android:id="@+id/btnCircle5"
+        android:background="@drawable/btn_background5"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/btnCircle4"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp" />
+
+    <Button
+        android:id="@+id/btnCircle6"
+        android:background="@drawable/btn_background6"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/btnCircle5"
+        android:layout_alignParentTop="true" />
+
+    <ImageButton
+        android:id="@+id/btnCheckmark"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@mipmap/ic_launcher"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:id="@+id/btnFinish"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="FINISH"
+        android:textSize="20sp" />
+
+</RelativeLayout>
